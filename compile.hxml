@@ -1,0 +1,6 @@
+-cp src
+-lib heaps
+-lib echo
+-js main.js
+-main Main
+-debug

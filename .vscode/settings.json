@@ -1,0 +1,8 @@
+{
+    "haxe.configurations": [
+        [
+            "compile.hxml"
+        ]
+    ],
+    "cmake.configureOnOpen": false
+}
