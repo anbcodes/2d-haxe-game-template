@@ -1,4 +1,5 @@
 class Main extends hxd.App {
+    var shouldFitX: Int = 16 * 2;
     var scale: Float;
     var world: echo.World;
     var player: Player;
@@ -10,7 +11,7 @@ class Main extends hxd.App {
 		this.world = echo.Echo.start({
 			width: level.layers[0].gridCellWidth * level.layers[0].gridCellsX,
 			height: level.layers[0].gridCellHeight * level.layers[0].gridCellsY,
-			gravity_y: 900,
+			gravity_y: 2500,
 			iterations: 5,
 			history: 1000
         });
@@ -25,9 +26,7 @@ class Main extends hxd.App {
     }
     
     function setScale() {
-		var shouldFitX = 16 * 2;
-
-		var tileWidth = this.s2d.width / shouldFitX;
+		var tileWidth = this.s2d.width / this.shouldFitX;
 
 		this.scale = tileWidth / this.level.layers[0].gridCellWidth;
 
@@ -43,8 +42,19 @@ class Main extends hxd.App {
     }
     
 	function followPlayer() {
-		this.s2d.x = Math.round(-this.player.body.x + this.engine.width / (2 * this.scale));
-		this.s2d.y = Math.round(-this.player.body.y + this.engine.height / (2 * this.scale));
+        var cellW = this.level.layers[0].gridCellWidth;
+        var cellH = this.level.layers[0].gridCellHeight;
+        var cellsX = this.level.layers[0].gridCellsX;
+        var cellsY = this.level.layers[0].gridCellsY;
+        var halfScreenX = (this.shouldFitX / 2);
+        var halfScreenY = ((this.shouldFitX / 16) * 8) / 2;
+        
+
+		var levelPixelsWidth = cellW * (cellsX - halfScreenX);
+        var levelPixelsHeight = cellH * (cellsY - halfScreenY);
+        this.s2d.x = Math.round(-Math.max(Math.min(this.player.body.x, levelPixelsWidth), halfScreenX * cellW) + this.engine.width / (2 * this.scale));
+        
+		this.s2d.y = Math.round(-Math.max(Math.min(this.player.body.y, levelPixelsHeight), halfScreenY * cellH) + this.engine.height / (2 * this.scale));
     }
 
 	static function main() {

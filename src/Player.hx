@@ -3,7 +3,7 @@ import hxd.Key;
 
 class Player extends Entity {
     var speedUpRate:Float = 140;
-    var jumpSpeedUp:Float = 700;
+    var jumpSpeedUp:Float = 1200;
     var color: Int = 0x555555;
     var width: Int = 8;
     var height: Int = 16;
@@ -19,7 +19,7 @@ class Player extends Entity {
 			drag_y: 200,
             elasticity: 0,
             max_velocity_x: this.speedUpRate * 3,
-            max_velocity_y: this.jumpSpeedUp * 3
+            max_velocity_y: this.jumpSpeedUp * 1.5
         })]);
 
         this.graphics = new h2d.Graphics(scene);
